@@ -34,6 +34,9 @@ public class Response {
     private CompanyTaskDto companyTask;
     private List<CompanyTaskDto> companyTaskList;
 
+    private CompanyMembershipDto companyMembership;
+    private List<CompanyMembershipDto> companyMembershipList;
+
     private ReviewDto review;
     private List<ReviewDto> reviewList;
 }
