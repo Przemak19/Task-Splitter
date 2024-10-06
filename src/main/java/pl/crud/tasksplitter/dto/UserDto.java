@@ -27,7 +27,7 @@ public class UserDto {
     private String name;
     private String email;
     private String password;
-    private Role role;
+    private String role;
     private List<CompanyTaskDto> tasks;
     private List<CompanyMembershipDto> companyMemberships;
     private AddressDto address;

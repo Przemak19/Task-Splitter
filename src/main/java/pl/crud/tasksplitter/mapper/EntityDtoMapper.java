@@ -4,6 +4,9 @@ import org.springframework.stereotype.Component;
 import pl.crud.tasksplitter.dto.*;
 import pl.crud.tasksplitter.entities.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class EntityDtoMapper {
 
@@ -13,7 +16,7 @@ public class EntityDtoMapper {
         userDto.setId(user.getId());
         userDto.setName(user.getName());
         userDto.setEmail(user.getEmail());
-        userDto.setRole(user.getRole());
+        userDto.setRole(user.getRole().name());
 
         return userDto;
     }
@@ -48,7 +51,7 @@ public class EntityDtoMapper {
         companyTaskDto.setName(companyTask.getName());
         companyTaskDto.setDescription(companyTask.getDescription());
         companyTaskDto.setEndDateTime(companyTask.getEndDateTime());
-        companyTaskDto.setTaskStatus(companyTask.getTaskStatus());
+        companyTaskDto.setTaskStatus(companyTask.getTaskStatus().name());
         companyTaskDto.setImageUrl(companyTask.getImageUrl());
 
         return companyTaskDto;
@@ -95,4 +98,48 @@ public class EntityDtoMapper {
         
         return userDto;
     }
+
+    public CompanyTaskDto mapCompanyTaskToDtoWithUserCompanyReview(CompanyTask companyTask) {
+        CompanyTaskDto companyTaskDto = mapCompanyTaskToDtoBasic(companyTask);
+
+        if(companyTask.getCompany() != null) {
+            CompanyDto companyDto = mapCompanyToDtoBasic(companyTask.getCompany());
+            companyTaskDto.setCompany(companyDto);
+        }
+
+        if(companyTask.getUser() != null) {
+            UserDto userDto = mapUserToDtoBasicWithAddress(companyTask.getUser());
+            companyTaskDto.setUser(userDto);
+        }
+
+        if(companyTask.getReview() != null && !companyTask.getReview().isEmpty()) {
+            companyTaskDto.setReview(companyTask.getReview()
+            .stream()
+                    .map(this::mapReviewToDtoBasic)
+                    .collect(Collectors.toList()));
+        }
+
+        return companyTaskDto;
+    }
+
+    public UserDto mapUserToDtoWithTasksAndMembership(User user) {
+        UserDto userDto = mapUserToDtoBasic(user);
+
+        if(user.getTasks() != null && !user.getTasks().isEmpty()) {
+            userDto.setTasks(user.getTasks()
+            .stream()
+                    .map(this::mapCompanyTaskToDtoWithUserCompanyReview)
+                    .collect(Collectors.toList()));
+        }
+
+        if(user.getCompanyMemberships() != null && !user.getCompanyMemberships().isEmpty()) {
+            userDto.setCompanyMemberships(user.getCompanyMemberships()
+                    .stream()
+                    .map(this::mapCompanyMembershipToDto)
+                    .collect(Collectors.toList()));
+        }
+
+        return userDto;
+    }
+
 }

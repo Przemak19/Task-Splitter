@@ -22,7 +22,7 @@ public class CompanyTaskDto {
     private String name;
     private String description;
     private LocalDateTime endDateTime;
-    private TaskStatus taskStatus;
+    private String taskStatus;
     private String imageUrl;
     private CompanyDto company;
     private UserDto user;
