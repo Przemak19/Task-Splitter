@@ -30,6 +30,7 @@ public class UserDto {
     private String role;
     private List<CompanyTaskDto> tasks;
     private List<CompanyMembershipDto> companyMemberships;
+    private CompanyDto ownedCompany;
     private AddressDto address;
     private LocalDateTime createdAt;
 }

@@ -41,6 +41,10 @@ public class User {
     private List<CompanyMembership> companyMemberships;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "owned_company_id")
+    private Company ownedCompany;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
 

@@ -18,4 +18,6 @@ public interface UserService {
     Response getUserInfoAndTasks();
 
     User saveUser(User user);
+
+    Boolean isAdmin(User user);
 }

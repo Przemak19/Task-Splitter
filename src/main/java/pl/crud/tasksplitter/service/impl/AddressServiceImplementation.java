@@ -13,6 +13,7 @@ import pl.crud.tasksplitter.repository.AddressRepository;
 import pl.crud.tasksplitter.repository.CompanyRepository;
 import pl.crud.tasksplitter.repository.UserRepository;
 import pl.crud.tasksplitter.service.interf.AddressService;
+import pl.crud.tasksplitter.service.interf.CompanyService;
 import pl.crud.tasksplitter.service.interf.UserService;
 
 @Service
@@ -21,6 +22,7 @@ public class AddressServiceImplementation implements AddressService {
 
     private final AddressRepository addressRepository;
     private final UserService userService;
+    private final CompanyService companyService;
 
     @Override
     public Response saveAndUpdateUserAddress(AddressDto addressDto) {
@@ -44,8 +46,23 @@ public class AddressServiceImplementation implements AddressService {
 
     @Override
     public Response saveAndUpdateCompanyAddress(AddressDto addressDto) {
+        User user = userService.getLoginUser();
+        Company company = user.getOwnedCompany();
+        Address address = company.getAddress();
 
-        return Response.builder().status(200).build();
+        address = setAddressRows(address, addressDto);
+
+        String message = (company.getAddress() == null) ? "Company address created" : "Company address updated";
+
+        addressRepository.save(address);
+
+        company.setAddress(address);
+        companyService.saveCompany(company);
+
+        return Response.builder()
+                .status(200)
+                .message(message)
+                .build();
     }
 
     private Address setAddressRows(Address address, AddressDto addressDto) {

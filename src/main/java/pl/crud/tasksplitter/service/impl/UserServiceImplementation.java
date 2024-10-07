@@ -114,4 +114,9 @@ public class UserServiceImplementation implements UserService {
     public User saveUser(User user) {
        return userRepository.save(user);
     }
+
+    @Override
+    public Boolean isAdmin(User user) {
+        return user.getRole() == Role.ADMIN;
+    }
 }
