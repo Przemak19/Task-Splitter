@@ -3,6 +3,7 @@ package pl.crud.tasksplitter.service.interf;
 import pl.crud.tasksplitter.dto.LoginRequest;
 import pl.crud.tasksplitter.dto.Response;
 import pl.crud.tasksplitter.dto.UserDto;
+import pl.crud.tasksplitter.entities.Company;
 import pl.crud.tasksplitter.entities.User;
 
 public interface UserService {
@@ -20,4 +21,6 @@ public interface UserService {
     User saveUser(User user);
 
     Boolean isAdmin(User user);
+
+    Company getAdminCompany(User user);
 }

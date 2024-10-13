@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import pl.crud.tasksplitter.dto.LoginRequest;
 import pl.crud.tasksplitter.dto.Response;
 import pl.crud.tasksplitter.dto.UserDto;
+import pl.crud.tasksplitter.entities.Company;
 import pl.crud.tasksplitter.entities.User;
 import pl.crud.tasksplitter.enums.Role;
 import pl.crud.tasksplitter.exception.InvalidCredentialsException;
@@ -118,5 +119,11 @@ public class UserServiceImplementation implements UserService {
     @Override
     public Boolean isAdmin(User user) {
         return user.getRole() == Role.ADMIN;
+    }
+
+    @Override
+    public Company getAdminCompany(User user)
+    {
+        return user.getRole() == Role.ADMIN ? user.getOwnedCompany() : null;
     }
 }

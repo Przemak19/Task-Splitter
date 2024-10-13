@@ -2,11 +2,9 @@ package pl.crud.tasksplitter.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.crud.tasksplitter.enums.TaskStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
