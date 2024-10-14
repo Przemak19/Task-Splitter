@@ -6,10 +6,13 @@ import org.springframework.stereotype.Service;
 import pl.crud.tasksplitter.dto.CompanyDto;
 import pl.crud.tasksplitter.dto.Response;
 import pl.crud.tasksplitter.entities.Company;
+import pl.crud.tasksplitter.entities.CompanyMembership;
 import pl.crud.tasksplitter.entities.User;
 import pl.crud.tasksplitter.repository.CompanyRepository;
 import pl.crud.tasksplitter.service.interf.CompanyService;
 import pl.crud.tasksplitter.service.interf.UserService;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -49,5 +52,15 @@ public class CompanyServiceImplementation implements CompanyService {
                 .status(200)
                 .message(message)
                 .build();
+    }
+
+    @Override
+    public Company saveCompanyMembership(CompanyMembership companyMembership, Company company) {
+        List<CompanyMembership> companyMemberships = companyRepository.getAllCompanyMembershipsByCompanyId(company.getId());
+
+        companyMemberships.add(companyMembership);
+        company.setCompanyMemberships(companyMemberships);
+
+        return companyRepository.save(company);
     }
 }

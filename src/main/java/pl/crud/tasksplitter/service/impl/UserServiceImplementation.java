@@ -10,6 +10,7 @@ import pl.crud.tasksplitter.dto.LoginRequest;
 import pl.crud.tasksplitter.dto.Response;
 import pl.crud.tasksplitter.dto.UserDto;
 import pl.crud.tasksplitter.entities.Company;
+import pl.crud.tasksplitter.entities.CompanyMembership;
 import pl.crud.tasksplitter.entities.User;
 import pl.crud.tasksplitter.enums.Role;
 import pl.crud.tasksplitter.exception.InvalidCredentialsException;
@@ -117,8 +118,23 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
+    public User saveUserCompanyMembership(CompanyMembership companyMembership, User user) {
+        List<CompanyMembership> companyMemberships = userRepository.getAllCompanyMembershipsByUserId(user.getId());
+
+        companyMemberships.add(companyMembership);
+        user.setCompanyMemberships(companyMemberships);
+
+        return userRepository.save(user);
+    }
+
+    @Override
     public Boolean isAdmin(User user) {
         return user.getRole() == Role.ADMIN;
+    }
+
+    @Override
+    public Boolean isUser(User user) {
+        return user.getRole() == Role.USER;
     }
 
     @Override
