@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import pl.crud.tasksplitter.dto.*;
 import pl.crud.tasksplitter.entities.*;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -124,6 +123,11 @@ public class EntityDtoMapper {
 
     public UserDto mapUserToDtoWithTasksAndMembership(User user) {
         UserDto userDto = mapUserToDtoBasic(user);
+
+        if(user.getOwnedCompany() != null) {
+            CompanyDto companyDto = mapCompanyToDtoBasic(user.getOwnedCompany());
+            userDto.setOwnedCompany(companyDto);
+        }
 
         if(user.getTasks() != null && !user.getTasks().isEmpty()) {
             userDto.setTasks(user.getTasks()

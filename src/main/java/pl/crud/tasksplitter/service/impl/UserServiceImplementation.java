@@ -79,14 +79,14 @@ public class UserServiceImplementation implements UserService {
     @Override
     public Response getAllUsers() {
         List<User> users = userRepository.findAll();
-        List<UserDto> userDtos = users.stream()
+        List<UserDto> userList = users.stream()
                 .map(entityDtoMapper::mapUserToDtoBasic)
                 .collect(Collectors.toList());
 
         return Response.builder()
                 .status(200)
                 .message("Successful")
-                .userList(userDtos)
+                .userList(userList)
                 .build();
     }
 
