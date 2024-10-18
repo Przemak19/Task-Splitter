@@ -7,5 +7,5 @@ import pl.crud.tasksplitter.entities.CompanyMembership;
 import java.util.List;
 
 public interface CompanyRepository extends JpaRepository<Company, Long> {
-    List<CompanyMembership> getAllCompanyMembershipsByCompanyId(Long companyId);
+    List<CompanyMembership> getAllCompanyMembershipsById(Long companyId);
 }

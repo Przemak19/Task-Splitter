@@ -56,7 +56,7 @@ public class CompanyServiceImplementation implements CompanyService {
 
     @Override
     public Company saveCompanyMembership(CompanyMembership companyMembership, Company company) {
-        List<CompanyMembership> companyMemberships = companyRepository.getAllCompanyMembershipsByCompanyId(company.getId());
+        List<CompanyMembership> companyMemberships = companyRepository.getAllCompanyMembershipsById(company.getId());
 
         companyMemberships.add(companyMembership);
         company.setCompanyMemberships(companyMemberships);

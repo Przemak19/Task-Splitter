@@ -119,7 +119,7 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User saveUserCompanyMembership(CompanyMembership companyMembership, User user) {
-        List<CompanyMembership> companyMemberships = userRepository.getAllCompanyMembershipsByUserId(user.getId());
+        List<CompanyMembership> companyMemberships = userRepository.getAllCompanyMembershipsById(user.getId());
 
         companyMemberships.add(companyMembership);
         user.setCompanyMemberships(companyMemberships);
